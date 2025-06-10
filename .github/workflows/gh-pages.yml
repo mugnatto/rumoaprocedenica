@@ -6,7 +6,7 @@ on:
       PAYMENT_URL:
         description: 'URL de pagamento (Hotmart, etc.)'
         required: true
-        default: 'https://link-de-pagamento.com'
+        default: 'https://hotmart.com/pt-br/marketplace/produtos/rumo-a-procedencia/K96466105H'
       VALOR_ORIGINAL:
         description: 'Valor original riscado (ex: R$ 5.000,00)'
         required: true
