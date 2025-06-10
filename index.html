@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso Rumo à Procedência</title>
     
+    <!-- Favicon (ícone da aba) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -72,7 +75,7 @@
                 <div class="mt-12">
                     <!-- Substitua o link do YouTube pelo seu vídeo de vendas -->
                     <div class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto rounded-xl shadow-2xl overflow-hidden">
-                        <iframe src="https://m.youtube.com/watch?v=AWD2_iae0Y4&t=5s&pp=2AEFkAIB" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://youtu.be/AWD2_iae0Y4?si=7j9yFYTcEq1DYBe1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -150,12 +153,12 @@
                 </div>
                 
                 <div class="bg-white text-gray-900 rounded-xl shadow-2xl p-10 max-w-lg mx-auto transform hover:scale-105 transition-transform duration-300">
-                    <p class="text-xl font-semibold mb-2 text-gray-500">Valor oficial: <s class="text-red-500">{{ VALOR_ORIGINAL }} </s></p>
+                    <p class="text-xl font-semibold mb-2 text-gray-500">Valor oficial: <s class="text-red-500">{{ VALOR_ORIGINAL }}</s></p>
                     <p class="text-lg font-semibold uppercase text-indigo-600">Oferta Especial</p>
                     <p class="text-6xl font-black my-4">
                         {{ OFFER_PARCELADO }}
                     </p>
-                    <p class="text-gray-500 mb-6">ou {{ OFFER_A_VISTA }}  à vista</p>
+                    <p class="text-gray-500 mb-6">ou {{ OFFER_A_VISTA }} à vista</p>
                     
                     <a href="{{ PAYMENT_URL }}" class="cta-button w-full block bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black py-4 px-10 text-xl rounded-lg shadow-xl hover:from-orange-600 hover:to-amber-600">
                         QUERO GARANTIR MINHA VAGA AGORA
@@ -170,7 +173,7 @@
     <footer class="bg-gray-900 text-white py-10">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; 2025 Rumo à Procedência. Todos os direitos reservados.</p>
-            <p class="text-sm text-gray-400 mt-2">Uma iniciativa de Rumo à Procedência.</p>
+            <p class="text-sm text-gray-400 mt-2">Uma iniciativa de Michelle Mohrer.</p>
         </div>
     </footer>
 
