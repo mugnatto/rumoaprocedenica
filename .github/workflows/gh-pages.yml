@@ -1,48 +1,52 @@
-# Nome do Workflow
 name: Deploy Landing Page
 
-# Gatilho: Executa quando houver um push na branch 'main'
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      PAYMENT_URL:
+        description: 'URL de pagamento (Hotmart, etc.)'
+        required: true
+        default: 'https://link-de-pagamento.com'
+      VALOR_ORIGINAL:
+        description: 'Valor original riscado (ex: R$ 5.000,00)'
+        required: true
+        default: 'R$ 5.000,00'
+      OFFER_PARCELADO:
+        description: 'Valor da oferta parcelada (ex: 10x de R$ 149,00)'
+        required: true
+        default: '10x de R$ 149,00'
+      OFFER_A_VISTA:
+        description: 'Valor da oferta à vista (ex: R$ 1.490,00)'
+        required: true
+        default: 'R$ 1.490,00'
 
-# Permissões necessárias para o deploy no GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Tarefas a serem executadas
 jobs:
-  # Tarefa de build e deploy
   build-and-deploy:
-    # Usa a última versão do Ubuntu como ambiente
     runs-on: ubuntu-latest
     steps:
-      # 1. Faz o checkout do seu código do repositório
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Substitui os placeholders no HTML pelos valores das variáveis do GitHub
-      - name: Replace placeholders with variables
+      - name: Replace placeholders with manual inputs
         run: |
-          sed -i 's|{{ PAYMENT_URL }}|${{ vars.PAYMENT_URL }}|g' index.html
-          sed -i 's|{{ VALOR_ORIGINAL }}|${{ vars.VALOR_ORIGINAL }}|g' index.html
-          sed -i 's|{{ OFFER_PARCELADO }}|${{ vars.OFFER_PARCELADO }}|g' index.html
-          sed -i 's|{{ OFFER_A_VISTA }}|${{ vars.OFFER_A_VISTA }}|g' index.html
+          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index.html
+          sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
+          sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
+          sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
       
-      # 3. Configura o GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # 4. Faz o upload do artefato (seu site modificado)
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
           
-      # 5. Faz o deploy para o GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
