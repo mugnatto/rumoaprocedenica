@@ -3,6 +3,10 @@ name: Deploy Landing Page
 on:
   workflow_dispatch:
     inputs:
+      git-ref:
+        description: 'Commit, branch ou tag para o deploy (ex: main ou um hash de commit)'
+        required: true
+        default: 'main'
       PAYMENT_URL:
         description: 'URL de pagamento (Hotmart, etc.)'
         required: true
