@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Rumo à Procedência</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons for simple icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* Applying the Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Simple gradient animation for the CTA button */
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+            background-size: 200% 200%;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-position: right center;
+        }
+        /* Styling for FAQ accordion */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary .plus-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- =========== HEADER =========== -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-900">Rumo à Procedência</h1>
+            <a href="#preco" class="cta-button bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:from-orange-600 hover:to-amber-600">
+                Garantir Vaga
+            </a>
+        </nav>
+    </header>
+
+    <!-- =========== HERO SECTION =========== -->
+    <main>
+        <section class="bg-white">
+            <div class="container mx-auto px-6 py-20 md:py-32 text-center">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
+                    Domine o Processo do Início ao Fim e <span class="text-indigo-600">Atue com Total Segurança</span>.
+                </h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    Para advogados(as) e estudantes de Direito que querem dominar todas as etapas do processo – desde antes da petição inicial até após o trânsito em julgado.
+                </p>
+                <a href="#preco" class="cta-button inline-block bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black py-4 px-10 text-lg rounded-lg shadow-xl hover:from-orange-600 hover:to-amber-600">
+                    QUERO ATUAR COM CONFIANÇA
+                </a>
+                <div class="mt-12">
+                    <!-- Substitua o link do YouTube pelo seu vídeo de vendas -->
+                    <div class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto rounded-xl shadow-2xl overflow-hidden">
+                        <iframe src="https://m.youtube.com/watch?v=AWD2_iae0Y4&t=5s&pp=2AEFkAIB" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== BENEFITS SECTION =========== -->
+        <section id="beneficios" class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold text-gray-900">O que você vai dominar?</h3>
+                    <p class="text-lg text-gray-600 mt-2">Desenvolva uma visão estratégica para atuar com segurança em todas as fases.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Benefício 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="bg-indigo-100 text-indigo-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                            <i data-feather="file-text" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Elaboração de Petições</h4>
+                        <p class="text-gray-600">Aprenda a elaborar todo tipo de petição com técnica e objetividade, do início ao fim do processo.</p>
+                    </div>
+                    <!-- Benefício 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="bg-indigo-100 text-indigo-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                            <i data-feather="git-branch" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Dinâmica Processual</h4>
+                        <p class="text-gray-600">Entenda a fundo a dinâmica do processo para antecipar movimentos e tomar as melhores decisões.</p>
+                    </div>
+                    <!-- Benefício 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="bg-indigo-100 text-indigo-600 rounded-full h-16 w-16 flex items-center justify-center mb-6">
+                            <i data-feather="briefcase" class="w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-3">Atuação nos Tribunais</h4>
+                        <p class="text-gray-600">Ganhe a confiança e segurança necessárias para atuar com excelência, inclusive nos Tribunais Superiores.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========== TESTIMONIALS SECTION =========== -->
+        <section id="depoimentos" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h3 class="text-4xl font-bold text-gray-900">Quem fez, recomenda.</h3>
+                    <p class="text-lg text-gray-600 mt-2">Veja o que nossos alunos dizem sobre a experiência.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-gray-100 p-8 rounded-xl"><p class="text-gray-700 mb-6">"Este curso foi um divisor de águas. A didática é incrível e o conteúdo é focado nos desafios reais da advocacia. Atuo com muito mais segurança hoje."</p><div class="flex items-center"><img src="https://placehold.co/60x60/A0AEC0/FFFFFF?text=A" alt="Foto do Aluno 1" class="w-12 h-12 rounded-full mr-4"><div><p class="font-bold text-gray-900">Mariana Silva</p><p class="text-sm text-gray-600">Advogada</p></div></div></div>
+                    <div class="bg-gray-100 p-8 rounded-xl"><p class="text-gray-700 mb-6">"Finalmente um curso que entrega o que promete. O 'Rumo à Procedência' me deu a visão estratégica que eu precisava para meus casos. Recomendo!"</p><div class="flex items-center"><img src="https://placehold.co/60x60/A0AEC0/FFFFFF?text=J" alt="Foto do Aluno 2" class="w-12 h-12 rounded-full mr-4"><div><p class="font-bold text-gray-900">João Pedro</p><p class="text-sm text-gray-600">Jovem Advogado</p></div></div></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- =========== INSTRUCTOR SECTION =========== -->
+        <section class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/3 text-center"><img src="https://static-media.hotmart.com/mRifYTTzk-O6xBsBNp4j7CZidKY=/140x140/smart/filters:format(webp):background_color(white)/hotmart/product_contents/37e815fb-ae4d-41c3-90ae-d7755a774d0c/foto%203.png?w=920" alt="Foto do Instrutor" class="w-48 h-48 md:w-64 md:h-64 rounded-full mx-auto shadow-2xl"></div>
+                <div class="md:w-2/3"><h3 class="text-3xl font-bold text-gray-900 mb-4">Conheça seu instrutor</h3><p class="text-lg text-gray-600 mb-4">Olá! Vou compartilhar com você, de forma prática e didática, todo o conhecimento que acumulei em mais de 12 anos de atuação na advocacia e na vida acadêmica, com foco total nos desafios reais da prática jurídica.</p><p class="text-lg text-gray-600">Criei o 'Rumo à Procedência' para te guiar nesta jornada e ver sua transformação acontecer.</p></div>
+            </div>
+        </section>
+
+        <!-- =========== PRICING, FAQ & FINAL CTA =========== -->
+        <section id="preco" class="py-24 bg-indigo-700 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h3 class="text-4xl font-extrabold mb-4">Chegou a sua hora de decolar.</h3>
+                <p class="text-indigo-200 text-lg max-w-2xl mx-auto mb-12">Tire suas últimas dúvidas e garanta seu acesso agora mesmo.</p>
+
+                <!-- FAQ Section -->
+                <div class="max-w-3xl mx-auto text-left mb-16 space-y-4">
+                    <details class="bg-indigo-600 p-6 rounded-lg"><summary class="font-semibold text-lg cursor-pointer flex justify-between items-center">Para quem é esse produto?<span class="plus-icon transition-transform duration-300"><i data-feather="plus-circle"></i></span></summary><p class="mt-4 text-indigo-200">Advogados e Estudantes de Direito que querem saber tudo o que precisam para atuar com confiança na advocacia, desde o início até o fim do processo, inclusive nos Tribunais Superiores.</p></details>
+                    <details class="bg-indigo-600 p-6 rounded-lg"><summary class="font-semibold text-lg cursor-pointer flex justify-between items-center">Por quanto tempo terei acesso ao curso?<span class="plus-icon transition-transform duration-300"><i data-feather="plus-circle"></i></span></summary><p class="mt-4 text-indigo-200">Você terá 2 anos de acesso total ao curso e a todos os plantões de dúvida.</p></details>
+                    <details class="bg-indigo-600 p-6 rounded-lg"><summary class="font-semibold text-lg cursor-pointer flex justify-between items-center">Tenho reembolso?<span class="plus-icon transition-transform duration-300"><i data-feather="plus-circle"></i></span></summary><p class="mt-4 text-indigo-200">Sim! Você tem direito ao reembolso total do valor investido até 7 dias após a compra.</p></details>
+                </div>
+                
+                <div class="bg-white text-gray-900 rounded-xl shadow-2xl p-10 max-w-lg mx-auto transform hover:scale-105 transition-transform duration-300">
+                    <p class="text-xl font-semibold mb-2 text-gray-500">Valor oficial: <s class="text-red-500">{{ VALOR_ORIGINAL }} </s></p>
+                    <p class="text-lg font-semibold uppercase text-indigo-600">Oferta Especial</p>
+                    <p class="text-6xl font-black my-4">
+                        {{ OFFER_PARCELADO }}
+                    </p>
+                    <p class="text-gray-500 mb-6">ou {{ OFFER_A_VISTA }}  à vista</p>
+                    
+                    <a href="{{ PAYMENT_URL }}" class="cta-button w-full block bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black py-4 px-10 text-xl rounded-lg shadow-xl hover:from-orange-600 hover:to-amber-600">
+                        QUERO GARANTIR MINHA VAGA AGORA
+                    </a>
+                    <p class="text-sm text-gray-500 mt-4">Compra 100% segura. Garantia de 7 dias.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========== FOOTER =========== -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Rumo à Procedência. Todos os direitos reservados.</p>
+            <p class="text-sm text-gray-400 mt-2">Uma iniciativa de Rumo à Procedência.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+    </script>
+
+</body>
+</html>

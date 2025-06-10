@@ -1,0 +1,33 @@
+# .github/workflows/deploy.yml
+name: Deploy Landing Page
+
+on:
+  push:
+    branches:
+      - main
+
+# Tarefas a serem executadas
+jobs:
+    build-and-deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+  
+        - name: Replace placeholders with variables
+          run: |
+            sed -i 's|{{ PAYMENT_URL }}|${{ vars.PAYMENT_URL }}|g' index.html
+            sed -i 's|{{ VALOR_ORIGINAL }}|${{ vars.VALOR_ORIGINAL }}|g' index.html
+            sed -i 's|{{ OFFER_PARCELADO }}|${{ vars.OFFER_PARCELADO }}|g' index.html
+            sed -i 's|{{ OFFER_A_VISTA }}|${{ vars.OFFER_A_VISTA }}|g' index.html  
+
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+        - name: Deploy to S3
+          run: |
+            aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --delete --acl public-read --exclude ".git/*" --exclude ".github/*"

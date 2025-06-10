@@ -1,0 +1,48 @@
+# Nome do Workflow
+name: Deploy Landing Page
+
+# Gatilho: Executa quando houver um push na branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+# Permissões necessárias para o deploy no GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Tarefas a serem executadas
+jobs:
+  # Tarefa de build e deploy
+  build-and-deploy:
+    # Usa a última versão do Ubuntu como ambiente
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Faz o checkout do seu código do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Substitui os placeholders no HTML pelos valores das variáveis do GitHub
+      - name: Replace placeholders with variables
+        run: |
+          sed -i 's|{{ PAYMENT_URL }}|${{ vars.PAYMENT_URL }}|g' index.html
+          sed -i 's|{{ VALOR_ORIGINAL }}|${{ vars.VALOR_ORIGINAL }}|g' index.html
+          sed -i 's|{{ OFFER_PARCELADO }}|${{ vars.OFFER_PARCELADO }}|g' index.html
+          sed -i 's|{{ OFFER_A_VISTA }}|${{ vars.OFFER_A_VISTA }}|g' index.html
+      
+      # 3. Configura o GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 4. Faz o upload do artefato (seu site modificado)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+          
+      # 5. Faz o deploy para o GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Não Encontrada - Rumo à Procedência</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Applying the Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .cta-button {
+            transition: all 0.3s ease-in-out;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+        <h1 class="text-9xl font-black text-indigo-600">404</h1>
+        <h2 class="text-4xl font-bold text-gray-900 mt-4">Página Não Encontrada</h2>
+        <p class="text-lg text-gray-600 mt-2 max-w-md">
+            Oops! Parece que o caminho que você tentou acessar não existe ou foi movido.
+        </p>
+        <div class="mt-8">
+             <!-- Este botão leva o usuário de volta para a página inicial -->
+            <a href="/" class="cta-button inline-block bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-3 px-8 text-lg rounded-lg shadow-xl hover:from-orange-600 hover:to-amber-600">
+                Voltar para o Início
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
