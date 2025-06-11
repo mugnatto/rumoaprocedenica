@@ -63,3 +63,9 @@ jobs:
       run: |
         S3_URL=$(terraform output -raw s3_site_url)
         echo "🌐 S3 Site URL: $S3_URL" >> $GITHUB_STEP_SUMMARY
+
+    - name: Show Cloudflare Custom Domain in Summary
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        CLOUDFLARE_DOMAIN=$(terraform output -raw cloudflare_custom_domain_url)
+        echo "🌐 Cloudflare Custom Domain: $CLOUDFLARE_DOMAIN" >> $GITHUB_STEP_SUMMARY

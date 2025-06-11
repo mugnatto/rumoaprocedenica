@@ -17,3 +17,18 @@ variable "region" {
   type        = string
   default     = "sa-east-1"
 }
+
+variable "cloudflare_zone_id" {
+  description = "Cloudflare Zone ID do domínio"
+  type        = string
+}
+
+variable "custom_domain" {
+  description = "Domínio personalizado para apontar para o S3"
+  type        = string
+}
+
+variable "cloudflare_api_token" {
+  description = "API Token do Cloudflare com permissão para editar DNS"
+  type        = string
+}
