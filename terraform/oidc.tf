@@ -17,14 +17,11 @@ resource "aws_iam_role" "github_actions" {
       {
         Effect: "Allow",
         Principal: {
-          Federated: aws_iam_openid_connect_provider.github_actions.arn
+          Federated: "arn:aws:iam::${var.AWS_ACCOUNT_ID}:oidc-provider/token.actions.githubusercontent.com"
         },
         Action: "sts:AssumeRoleWithWebIdentity",
         Condition: {
-          StringEquals = {
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-          },
-          StringLike = {
+          StringLike: {
             "token.actions.githubusercontent.com:sub": "repo:mugnatto/rumoaprocedenica:*"
           }
         }
@@ -33,49 +30,69 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
-# Política para CloudFront
-resource "aws_iam_role_policy_attachment" "cloudfront_full" {
-  role       = aws_iam_role.github_actions.name
-  policy_arn = "arn:aws:iam::aws:policy/CloudFrontFullAccess"
-}
-
-# Política para gerenciar IAM (necessário para Terraform)
-resource "aws_iam_role_policy_attachment" "iam_full" {
-  role       = aws_iam_role.github_actions.name
-  policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
-}
-
-# Política customizada para permissões específicas
 resource "aws_iam_role_policy" "terraform_policy" {
   name = "terraform-policy"
   role = aws_iam_role.github_actions.name
 
   policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [
       {
-        Effect = "Allow"
+        Effect = "Allow",
         Action = [
-          "s3:*",
-          "cloudfront:*",
-          "iam:*",
-          "dynamodb:*",
-          "route53:*"
+          "s3:CreateBucket",
+          "s3:DeleteBucket",
+          "s3:PutBucket*",
+          "s3:GetBucket*",
+          "s3:ListBucket",
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:GetBucketNotification",
+          "s3:PutBucketNotification"
+        ],
+        Resource = [
+          "arn:aws:s3:::rumo-a-procedencia-landing-page",
+          "arn:aws:s3:::rumo-a-procedencia-landing-page/*"
         ]
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "iam:GetRole",
+          "iam:PassRole",
+          "iam:CreateRole",
+          "iam:DeleteRole",
+          "iam:PutRolePolicy",
+          "iam:DeleteRolePolicy",
+          "iam:AttachRolePolicy",
+          "iam:DetachRolePolicy",
+          "iam:CreateOpenIDConnectProvider",
+          "iam:DeleteOpenIDConnectProvider",
+          "iam:GetOpenIDConnectProvider"
+        ],
         Resource = "*"
       },
       {
-        Effect = "Allow"
+        Effect = "Allow",
         Action = [
-          "s3:PutObject",
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:DeleteObject"
-        ]
-        Resource = [
-          "arn:aws:s3:::${var.bucket_name}",
-          "arn:aws:s3:::${var.bucket_name}/*"
-        ]
+          "sns:Publish",
+          "sns:CreateTopic",
+          "sns:DeleteTopic",
+          "sns:GetTopicAttributes",
+          "sns:SetTopicAttributes"
+        ],
+        Resource = "arn:aws:sns:sa-east-1:${var.AWS_ACCOUNT_ID}:rumo-a-procedencia-topic"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:DescribeTable"
+        ],
+        Resource = "arn:aws:dynamodb:sa-east-1:${var.AWS_ACCOUNT_ID}:table/terraform-state-locks"
       }
     ]
   })
