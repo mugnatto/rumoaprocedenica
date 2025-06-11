@@ -65,3 +65,13 @@ resource "aws_s3_bucket_website_configuration" "site_config" {
     key = "404.html"
   }
 }
+resource "aws_s3_bucket_notification" "s3_notification" {
+  bucket = aws_s3_bucket.static_site.id
+
+  topic {
+    events = ["s3:ObjectCreated:*"]
+    topic_arn = "arn:aws:sns:sa-east-1:${var.AWS_ACCOUNT_ID}:rumo-a-procedencia-topic"
+  }
+
+  depends_on = [aws_s3_bucket.static_site]
+}
