@@ -3,7 +3,7 @@ resource "cloudflare_dns_record" "custom_domain" {
   name    = var.custom_domain
   type    = "CNAME"
   content = aws_s3_bucket_website_configuration.site_config.website_endpoint
-  ttl     = 3600
+  ttl     = 1
   proxied = true
 }
 
