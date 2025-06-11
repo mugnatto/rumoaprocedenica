@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "site_topic" {
-  name = "${var.bucket_name}-topic"
+  name = replace("${var.bucket_name}-topic", ".", "-")
 }
 
 resource "aws_sns_topic_subscription" "email_alert" {
