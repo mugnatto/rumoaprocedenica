@@ -32,6 +32,13 @@ resource "aws_s3_bucket" "static_site" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "allow_public_policy" {
+  bucket                  = aws_s3_bucket.static_site.id
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
 
 resource "aws_s3_bucket_policy" "public_access" {
   bucket = aws_s3_bucket.static_site.id
@@ -50,6 +57,7 @@ resource "aws_s3_bucket_policy" "public_access" {
       }
     ]
   })
+  depends_on = [aws_s3_bucket_public_access_block.allow_public_policy]
 }
 
 resource "aws_s3_bucket_website_configuration" "site_config" {
