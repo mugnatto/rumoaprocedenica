@@ -18,6 +18,7 @@ jobs:
     env:
       TF_VAR_AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
       TF_VAR_bucket_name: ${{ vars.TF_VAR_bucket_name }}
+      TF_VAR_sns_email: ${{ vars.TF_VAR_sns_email }}
     
     defaults:
       run:

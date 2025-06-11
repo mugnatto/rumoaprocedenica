@@ -32,6 +32,8 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    outputs:
+      artifact-path: ${{ steps.upload.outputs.artifact-path }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -49,13 +51,54 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
+        id: upload
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
       - name: Post deployment summary
         run: 'echo "🚀 Deploy concluído! Acesse a página em: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY'
+
+  approval:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      # O environment do GitHub requer aprovação manual antes de continuar
+      # Configure o environment "production" nas configurações do repositório
+    steps:
+      - name: Approval step
+        run: echo "Aguardando aprovação para deploy em produção..."
+
+  deploy-to-s3:
+    needs: approval
+    runs-on: ubuntu-latest
+    if: ${{ needs.approval.result == 'success' }}
+    env:
+      AWS_REGION: sa-east-1
+      BUCKET_NAME: ${{ vars.TF_VAR_bucket_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.git-ref }}
+
+      - name: Replace placeholders with manual inputs
+        run: |
+          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index.html
+          sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
+          sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
+          sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/gha-deploy-role
+          aws-region: sa-east-1
+
+      - name: Deploy to S3
+        run: aws s3 cp ./index.html s3://$BUCKET_NAME/index.html --acl public-read

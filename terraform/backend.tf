@@ -5,9 +5,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "mugnattoworktfstate"
-    key    = "rumoaprocedencia/terraform.tfstate"
-    region = "sa-east-1"
-    encrypt        = true
+    bucket  = "mugnattoworktfstate"
+    key     = "rumoaprocedencia/terraform.tfstate"
+    region  = "sa-east-1"
+    encrypt = true
   }
 }
