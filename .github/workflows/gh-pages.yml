@@ -104,8 +104,8 @@ jobs:
         run: |
           aws s3 sync . s3://$BUCKET_NAME/ --delete --exclude ".git/*" --exclude ".github/*" --exclude "terraform/*" --exclude ".gitignore*" --exclude "images/*"
           echo "✅ Copy successful!" >> $GITHUB_STEP_SUMMARY
-          S3_URL=$(terraform output -raw s3_site_url)
-          echo "🌐 S3 Site URL: $S3_URL" >> $GITHUB_STEP_SUMMARY
+          S3_WEBSITE_URL="http://${BUCKET_NAME}.s3-website-sa-east-1.amazonaws.com"
+          echo "🌐 S3 Website URL: $S3_WEBSITE_URL" >> $GITHUB_STEP_SUMMARY
       - name: Show Cloudflare Custom Domain in Summary
         run: |
           echo "🌐 Cloudflare Custom Domain: https://${CUSTOM_DOMAIN}" >> $GITHUB_STEP_SUMMARY
