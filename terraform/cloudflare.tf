@@ -1,3 +1,5 @@
+
+
 resource "cloudflare_dns_record" "custom_domain" {
   zone_id = var.cloudflare_zone_id
   name    = var.custom_domain
@@ -9,5 +11,5 @@ resource "cloudflare_dns_record" "custom_domain" {
 
 output "cloudflare_custom_domain_url" {
   description = "URL do domínio personalizado via Cloudflare"
-  value       = "https://${var.custom_domain}"
+  value       = "https://${var.custom_domain}.${var.domain}"
 }

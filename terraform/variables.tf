@@ -32,3 +32,7 @@ variable "cloudflare_api_token" {
   description = "API Token do Cloudflare com permissão para editar DNS"
   type        = string
 }
+variable "domain" {
+  description = "Domínio base (ex: michellemohrer.com)"
+  type        = string
+}

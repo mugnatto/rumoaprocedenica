@@ -22,6 +22,7 @@ jobs:
       TF_VAR_region: ${{ vars.TF_VAR_region }}
       TF_VAR_cloudflare_zone_id: ${{ vars.CLOUDFLARE_ZONE_ID }}
       TF_VAR_custom_domain: ${{ vars.CUSTOM_DOMAIN }}
+      TF_VAR_domain: ${{ vars.DOMAIN }}
       TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     
     defaults:
