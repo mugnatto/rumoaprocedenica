@@ -102,7 +102,7 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync . s3://$BUCKET_NAME/ --delete --exclude ".git/*" --exclude ".github/*" --exclude "terraform/*"
+          aws s3 sync . s3://$BUCKET_NAME/ --delete --exclude ".git/*" --exclude ".github/*" --exclude "terraform/*" --exclude ".gitignore*"
           # Corrige Content-Type para imagens HEIC (caso necessário)
           for file in $(find . -type f -name '*.heic'); do
             aws s3 cp "$file" "s3://$BUCKET_NAME/${file#./}" --content-type "image/heic";
