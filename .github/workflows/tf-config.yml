@@ -57,3 +57,9 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
+
+    - name: Show S3 Site URL in Summary
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        S3_URL=$(terraform output -raw s3_site_url)
+        echo "🌐 S3 Site URL: $S3_URL" >> $GITHUB_STEP_SUMMARY
