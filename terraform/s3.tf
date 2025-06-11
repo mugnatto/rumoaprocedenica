@@ -97,3 +97,8 @@ resource "aws_s3_bucket_notification" "s3_notification" {
 
   depends_on = [aws_s3_bucket.static_site]
 }
+
+output "s3_site_url" {
+  description = "URL pública do bucket S3 para acesso ao site"
+  value       = "http://${var.bucket_name}.s3.${var.region}.amazonaws.com"
+}
