@@ -101,4 +101,9 @@ jobs:
           aws-region: sa-east-1
 
       - name: Deploy to S3
-        run: aws s3 cp ./index.html s3://$BUCKET_NAME/index.html --acl public-read
+        run: |
+          aws s3 sync . s3://$BUCKET_NAME/ --delete --acl public-read --exclude ".git/*" --exclude ".github/*" --exclude "terraform/*"
+          # Corrige Content-Type para imagens HEIC (caso necessário)
+          for file in $(find . -type f -name '*.heic'); do
+            aws s3 cp "$file" "s3://$BUCKET_NAME/${file#./}" --acl public-read --content-type "image/heic";
+          done
