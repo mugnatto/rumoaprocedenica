@@ -1,1 +1,0 @@
-bucket_name     = "rumo-a-procedencia-landing-page"
