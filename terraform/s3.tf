@@ -32,6 +32,7 @@ resource "aws_s3_bucket" "static_site" {
   }
 }
 
+
 resource "aws_s3_bucket_policy" "public_access" {
   bucket = aws_s3_bucket.static_site.id
   policy = jsonencode({
