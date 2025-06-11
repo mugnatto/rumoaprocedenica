@@ -103,3 +103,6 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync . s3://$BUCKET_NAME/ --delete --exclude ".git/*" --exclude ".github/*" --exclude "terraform/*" --exclude ".gitignore*" --exclude "images/*"
+          echo "✅ Copy successful!" >> $GITHUB_STEP_SUMMARY
+          # Mostra o endereço público do S3 no summary
+          echo "🌐 S3 Site URL: http://$BUCKET_NAME.s3.sa-east-1.amazonaws.com" >> $GITHUB_STEP_SUMMARY
