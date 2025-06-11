@@ -108,6 +108,7 @@ jobs:
           echo "🌐 S3 Website URL: $S3_WEBSITE_URL" >> $GITHUB_STEP_SUMMARY
       - name: Show Cloudflare Custom Domain in Summary
         run: |
-          echo "🌐 Cloudflare Custom Domain: https://${CUSTOM_DOMAIN}" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 Cloudflare Custom Domain: https://${CUSTOM_DOMAIN}.${DOMAIN}" >> $GITHUB_STEP_SUMMARY
         env:
-          CUSTOM_DOMAIN: ${{ env.custom_domain || env.CUSTOM_DOMAIN || 'dominio-nao-definido' }}
+          CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+          DOMAIN: ${{ vars.DOMAIN }}
