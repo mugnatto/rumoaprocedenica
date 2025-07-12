@@ -23,6 +23,10 @@ on:
         description: 'Valor da oferta à vista (ex: R$ 1.490,00)'
         required: true
         default: 'R$ 1.490,00'
+      DATA_OFERTA:
+        description: 'Data limite da oferta especial (ex: até 15/07, às 23h59)'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -46,6 +50,7 @@ jobs:
           sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
           sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
           sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
+          sed -i 's|{{ DATA_OFERTA }}|${{ github.event.inputs.DATA_OFERTA }}|g' index.html
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -93,6 +98,7 @@ jobs:
           sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
           sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
           sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
+          sed -i 's|{{ DATA_OFERTA }}|${{ github.event.inputs.DATA_OFERTA }}|g' index.html
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -106,6 +112,13 @@ jobs:
           echo "✅ Copy successful!" >> $GITHUB_STEP_SUMMARY
           S3_WEBSITE_URL="http://${BUCKET_NAME}.s3-website-sa-east-1.amazonaws.com"
           echo "🌐 S3 Website URL: $S3_WEBSITE_URL" >> $GITHUB_STEP_SUMMARY
+
+      - name: Unpublish GitHub Pages
+        if: always()
+        run: |
+          gh api --method DELETE repos/${{ github.repository }}/pages --silent || echo "Nenhuma publicação ativa do GitHub Pages para remover."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Show Cloudflare Custom Domain in Summary
         run: |
           echo "🌐 Cloudflare Custom Domain: https://${CUSTOM_DOMAIN}.${DOMAIN}" >> $GITHUB_STEP_SUMMARY
