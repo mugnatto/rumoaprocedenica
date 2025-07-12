@@ -106,6 +106,13 @@ jobs:
           echo "✅ Copy successful!" >> $GITHUB_STEP_SUMMARY
           S3_WEBSITE_URL="http://${BUCKET_NAME}.s3-website-sa-east-1.amazonaws.com"
           echo "🌐 S3 Website URL: $S3_WEBSITE_URL" >> $GITHUB_STEP_SUMMARY
+
+      - name: Unpublish GitHub Pages
+        if: always()
+        run: |
+          gh api --method DELETE repos/${{ github.repository }}/pages --silent || echo "Nenhuma publicação ativa do GitHub Pages para remover."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Show Cloudflare Custom Domain in Summary
         run: |
           echo "🌐 Cloudflare Custom Domain: https://${CUSTOM_DOMAIN}.${DOMAIN}" >> $GITHUB_STEP_SUMMARY
