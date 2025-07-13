@@ -125,3 +125,24 @@ jobs:
         env:
           CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
           DOMAIN: ${{ vars.DOMAIN }}
+
+  purge-cloudflare-cache:
+    needs: deploy-to-s3
+    runs-on: ubuntu-latest
+    if: ${{ needs.deploy-to-s3.result == 'success' }}
+    steps:
+      - name: Purge Cloudflare cache
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ vars.TF_VAR_cloudflare_zone_id }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DOMAIN: ${{ vars.TF_VAR_domain }}
+          CUSTOM_DOMAIN: ${{ vars.TF_VAR_custom_domain }}
+        run: |
+          # Purge cache for the entire zone
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
+          
+          echo "🧹 Cache do Cloudflare limpo com sucesso!" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 As alterações estarão visíveis em: https://${CUSTOM_DOMAIN}.${DOMAIN}" >> $GITHUB_STEP_SUMMARY
