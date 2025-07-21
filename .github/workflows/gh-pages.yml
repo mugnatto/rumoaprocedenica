@@ -4,25 +4,25 @@ on:
   workflow_dispatch:
     inputs:
       PAYMENT_URL:
-        description: 'URL de pagamento (Hotmart, etc.)'
+        description: "URL de pagamento (Hotmart, etc.)"
         required: true
-        default: 'https://docs.google.com/forms/d/e/1FAIpQLSctClV5fHLDJ_YODtDkvq09qpLpW3jtWWHlzvQOEHe0cMDazQ/viewform'
+        default: "https://docs.google.com/forms/d/e/1FAIpQLSctClV5fHLDJ_YODtDkvq09qpLpW3jtWWHlzvQOEHe0cMDazQ/viewform"
       VALOR_ORIGINAL:
-        description: "'<p class='text-xl font-semibold mb-2 text-gray-500'>Valor oficial: <s class='text-red-500'>R$ 5000,00</s></p>'
+        description: "HTML completo para o valor original"
         required: false
-        default: ' '
+        default: "<p class='text-xl font-semibold mb-2 text-gray-500'>Valor oficial: <s class='text-red-500'>R$ 5000,00</s></p>"
       DATA_OFERTA:
-        description: "'<p class='text-lg font-semibold uppercase text-indigo-600'>OFERTA ESPECIAL – válida até xx/xx</p>'"
+        description: "HTML da data da oferta"
         required: false
-        default: ' '
+        default: "<p class='text-lg font-semibold uppercase text-indigo-600'>OFERTA ESPECIAL – válida até xx/xx</p>"
       OFFER_PARCELADO:
-        description: "'<p class='text-4xl font-black my-4'>12x de R$ 250,00</p>'"
+        description: "HTML da oferta parcelada"
         required: false
-        default: ' '
+        default: "<p class='text-4xl font-black my-4'>12x de R$ 250,00</p>"
       OFFER_A_VISTA:
-        description: "'<p class='text-gray-500 mb-6'>ou R$ 2970,00 à vista</p>'"
+        description: "HTML da oferta à vista"
         required: false
-        default: ' '
+        default: "<p class='text-gray-500 mb-6'>ou R$ 2970,00 à vista</p>"
 
 
 permissions:
