@@ -61,6 +61,9 @@ jobs:
         with:
           path: '.'
 
+      - name: Set output
+        run: echo "artifact-path=." >> $GITHUB_OUTPUT
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
