@@ -37,33 +37,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.git-ref }}
 
       - name: Replace placeholders with manual inputs
         run: |
-          sed -i "s|{{ PAYMENT_URL }}|$(cat <<EOF
-${{ github.event.inputs.PAYMENT_URL }}
-EOF
-)|g" index.html
-          sed -i "s|{{ VALOR_ORIGINAL }}|$(cat <<EOF
-${{ github.event.inputs.VALOR_ORIGINAL }}
-EOF
-)|g" index.html
-          sed -i "s|{{ DATA_OFERTA }}|$(cat <<EOF
-${{ github.event.inputs.DATA_OFERTA }}
-EOF
-)|g" index.html
-          sed -i "s|{{ OFFER_PARCELADO }}|$(cat <<EOF
-${{ github.event.inputs.OFFER_PARCELADO }}
-EOF
-)|g" index.html
-          sed -i "s|{{ OFFER_A_VISTA }}|$(cat <<EOF
-${{ github.event.inputs.OFFER_A_VISTA }}
-EOF
-)|g" index.html
+          echo "${{ github.event.inputs.PAYMENT_URL }}" > temp1.txt
+          echo "${{ github.event.inputs.VALOR_ORIGINAL }}" > temp2.txt
+          echo "${{ github.event.inputs.DATA_OFERTA }}" > temp3.txt
+          echo "${{ github.event.inputs.OFFER_PARCELADO }}" > temp4.txt
+          echo "${{ github.event.inputs.OFFER_A_VISTA }}" > temp5.txt
 
-      - name: Setup Pages
+          sed -i "s|{{ PAYMENT_URL }}|$(cat temp1.txt)|g" index.html
+          sed -i "s|{{ VALOR_ORIGINAL }}|$(cat temp2.txt)|g" index.html
+          sed -i "s|{{ DATA_OFERTA }}|$(cat temp3.txt)|g" index.html
+          sed -i "s|{{ OFFER_PARCELADO }}|$(cat temp4.txt)|g" index.html
+          sed -i "s|{{ OFFER_A_VISTA }}|$(cat temp5.txt)|g" index.html
+
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
@@ -98,31 +87,20 @@ EOF
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.git-ref }}
 
-      - name: Replace placeholders with manual inputs
+      - name: Replace placeholders with manual inputs (S3)
         run: |
-          sed -i "s|{{ PAYMENT_URL }}|$(cat <<EOF
-${{ github.event.inputs.PAYMENT_URL }}
-EOF
-)|g" index.html
-          sed -i "s|{{ VALOR_ORIGINAL }}|$(cat <<EOF
-${{ github.event.inputs.VALOR_ORIGINAL }}
-EOF
-)|g" index.html
-          sed -i "s|{{ DATA_OFERTA }}|$(cat <<EOF
-${{ github.event.inputs.DATA_OFERTA }}
-EOF
-)|g" index.html
-          sed -i "s|{{ OFFER_PARCELADO }}|$(cat <<EOF
-${{ github.event.inputs.OFFER_PARCELADO }}
-EOF
-)|g" index.html
-          sed -i "s|{{ OFFER_A_VISTA }}|$(cat <<EOF
-${{ github.event.inputs.OFFER_A_VISTA }}
-EOF
-)|g" index.html
+          echo "${{ github.event.inputs.PAYMENT_URL }}" > temp1.txt
+          echo "${{ github.event.inputs.VALOR_ORIGINAL }}" > temp2.txt
+          echo "${{ github.event.inputs.DATA_OFERTA }}" > temp3.txt
+          echo "${{ github.event.inputs.OFFER_PARCELADO }}" > temp4.txt
+          echo "${{ github.event.inputs.OFFER_A_VISTA }}" > temp5.txt
+
+          sed -i "s|{{ PAYMENT_URL }}|$(cat temp1.txt)|g" index.html
+          sed -i "s|{{ VALOR_ORIGINAL }}|$(cat temp2.txt)|g" index.html
+          sed -i "s|{{ DATA_OFERTA }}|$(cat temp3.txt)|g" index.html
+          sed -i "s|{{ OFFER_PARCELADO }}|$(cat temp4.txt)|g" index.html
+          sed -i "s|{{ OFFER_A_VISTA }}|$(cat temp5.txt)|g" index.html
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -132,10 +110,14 @@ EOF
 
       - name: Deploy to S3
         run: |
-          aws s3 sync . s3://$BUCKET_NAME/ --delete --exclude ".git/*" --exclude ".github/*" --exclude "terraform/*" --exclude ".gitignore*" --exclude "images/*"
+          aws s3 sync . s3://$BUCKET_NAME/ --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "terraform/*" \
+            --exclude ".gitignore*" \
+            --exclude "images/*"
           echo "✅ Copy successful!" >> $GITHUB_STEP_SUMMARY
-          S3_WEBSITE_URL="http://${BUCKET_NAME}.s3-website-sa-east-1.amazonaws.com"
-          echo "🌐 S3 Website URL: $S3_WEBSITE_URL" >> $GITHUB_STEP_SUMMARY
+          echo "🌐 S3 Website URL: http://${BUCKET_NAME}.s3-website-sa-east-1.amazonaws.com" >> $GITHUB_STEP_SUMMARY
 
       - name: Unpublish GitHub Pages
         if: always()
