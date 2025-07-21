@@ -24,7 +24,6 @@ on:
         required: false
         default: "<p class='text-gray-500 mb-6'>ou R$ 2970,00 à vista</p>"
 
-
 permissions:
   contents: read
   pages: write
@@ -43,13 +42,27 @@ jobs:
 
       - name: Replace placeholders with manual inputs
         run: |
-          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index.html
-          sed -i 's|{{ TXT_VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
-          sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
-          sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
-          sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
-          sed -i 's|{{ DATA_OFERTA }}|${{ github.event.inputs.DATA_OFERTA }}|g' index.html
-      
+          sed -i "s|{{ PAYMENT_URL }}|$(cat <<EOF
+${{ github.event.inputs.PAYMENT_URL }}
+EOF
+)|g" index.html
+          sed -i "s|{{ VALOR_ORIGINAL }}|$(cat <<EOF
+${{ github.event.inputs.VALOR_ORIGINAL }}
+EOF
+)|g" index.html
+          sed -i "s|{{ DATA_OFERTA }}|$(cat <<EOF
+${{ github.event.inputs.DATA_OFERTA }}
+EOF
+)|g" index.html
+          sed -i "s|{{ OFFER_PARCELADO }}|$(cat <<EOF
+${{ github.event.inputs.OFFER_PARCELADO }}
+EOF
+)|g" index.html
+          sed -i "s|{{ OFFER_A_VISTA }}|$(cat <<EOF
+${{ github.event.inputs.OFFER_A_VISTA }}
+EOF
+)|g" index.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -64,15 +77,13 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Post deployment summary
-        run: 'echo "🚀 Deploy concluído! Acesse a página em: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY'
+        run: echo "🚀 Deploy concluído! Acesse a página em: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
 
   approval:
     needs: build-and-deploy
     runs-on: ubuntu-latest
     environment:
       name: production
-      # O environment do GitHub requer aprovação manual antes de continuar
-      # Configure o environment "production" nas configurações do repositório
     steps:
       - name: Approval step
         run: echo "Aguardando aprovação para deploy em produção..."
@@ -92,11 +103,26 @@ jobs:
 
       - name: Replace placeholders with manual inputs
         run: |
-          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index.html
-          sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
-          sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
-          sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
-          sed -i 's|{{ DATA_OFERTA }}|${{ github.event.inputs.DATA_OFERTA }}|g' index.html
+          sed -i "s|{{ PAYMENT_URL }}|$(cat <<EOF
+${{ github.event.inputs.PAYMENT_URL }}
+EOF
+)|g" index.html
+          sed -i "s|{{ VALOR_ORIGINAL }}|$(cat <<EOF
+${{ github.event.inputs.VALOR_ORIGINAL }}
+EOF
+)|g" index.html
+          sed -i "s|{{ DATA_OFERTA }}|$(cat <<EOF
+${{ github.event.inputs.DATA_OFERTA }}
+EOF
+)|g" index.html
+          sed -i "s|{{ OFFER_PARCELADO }}|$(cat <<EOF
+${{ github.event.inputs.OFFER_PARCELADO }}
+EOF
+)|g" index.html
+          sed -i "s|{{ OFFER_A_VISTA }}|$(cat <<EOF
+${{ github.event.inputs.OFFER_A_VISTA }}
+EOF
+)|g" index.html
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -117,6 +143,7 @@ jobs:
           gh api --method DELETE repos/${{ github.repository }}/pages --silent || echo "Nenhuma publicação ativa do GitHub Pages para remover."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Show Cloudflare Custom Domain in Summary
         run: |
           echo "🌐 Cloudflare Custom Domain: https://${CUSTOM_DOMAIN}.${DOMAIN}" >> $GITHUB_STEP_SUMMARY
