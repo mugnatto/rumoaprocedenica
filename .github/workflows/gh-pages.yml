@@ -13,11 +13,11 @@ on:
         default: 'https://docs.google.com/forms/d/e/1FAIpQLSctClV5fHLDJ_YODtDkvq09qpLpW3jtWWHlzvQOEHe0cMDazQ/viewform'
       TXT_VALOR_ORIGINAL:
         description: 'Texto do Valor oficial riscado (ex: Valor oficial: )'
-        required: true
+        required: false
         default: ' '
       VALOR_ORIGINAL:
         description: 'Valor oficial riscado (ex: R$ 5.000,00)'
-        required: true
+        required: false
         default: ' '
       DATA_OFERTA:
         description: 'Data limite da oferta especial (ex: válida até 15/07, às 23h59)'
@@ -25,11 +25,11 @@ on:
         default: ' '
       OFFER_PARCELADO:
         description: 'Valor da oferta parcelada (ex: 10x de R$ 149,00)'
-        required: true
+        required: false
         default: ' '
       OFFER_A_VISTA:
         description: 'Valor da oferta à vista (ex: R$ 1.490,00 à vista)'
-        required: true
+        required: false
         default: ' '
 
 
