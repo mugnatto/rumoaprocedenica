@@ -7,7 +7,6 @@ on:
         description: 'URL de pagamento (Hotmart, etc.)'
         required: true
         default: 'https://hotmart.com/pt-br/marketplace/produtos/rumo-a-procedencia/K96466105H'
-        required: false
 
 permissions:
   contents: read
