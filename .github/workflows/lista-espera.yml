@@ -1,4 +1,4 @@
-name: Deploy Landing Page
+name: Deploy Lista de espera
 
 on:
   workflow_dispatch:
@@ -7,22 +7,6 @@ on:
         description: 'URL de pagamento (Hotmart, etc.)'
         required: true
         default: 'https://docs.google.com/forms/d/e/1FAIpQLSctClV5fHLDJ_YODtDkvq09qpLpW3jtWWHlzvQOEHe0cMDazQ/viewform'
-      VALOR_ORIGINAL:
-        description: 'Valor original riscado (ex: R$ 5.000,00)'
-        required: true
-        default: 'R$ 5.000,00'
-      OFFER_PARCELADO:
-        description: 'Valor da oferta parcelada (ex: 10x de R$ 149,00)'
-        required: true
-        default: '10x de R$ 149,00'
-      OFFER_A_VISTA:
-        description: 'Valor da oferta à vista (ex: R$ 1.490,00)'
-        required: true
-        default: 'R$ 1.490,00'
-      DATA_OFERTA:
-        description: 'Data limite da oferta especial (ex: até 15/07, às 23h59)'
-        required: false
-        default: ''
 
 permissions:
   contents: read
@@ -42,11 +26,8 @@ jobs:
 
       - name: Replace placeholders with manual inputs
         run: |
-          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index.html
-          sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
-          sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
-          sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
-          sed -i 's|{{ DATA_OFERTA }}|${{ github.event.inputs.DATA_OFERTA }}|g' index.html
+          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index-lista.html
+
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -90,11 +71,7 @@ jobs:
 
       - name: Replace placeholders with manual inputs
         run: |
-          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index.html
-          sed -i 's|{{ VALOR_ORIGINAL }}|${{ github.event.inputs.VALOR_ORIGINAL }}|g' index.html
-          sed -i 's|{{ OFFER_PARCELADO }}|${{ github.event.inputs.OFFER_PARCELADO }}|g' index.html
-          sed -i 's|{{ OFFER_A_VISTA }}|${{ github.event.inputs.OFFER_A_VISTA }}|g' index.html
-          sed -i 's|{{ DATA_OFERTA }}|${{ github.event.inputs.DATA_OFERTA }}|g' index.html
+          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index-lista.html
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -104,7 +81,7 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 sync . s3://$BUCKET_NAME/ --delete --exclude ".git/*" --exclude ".github/*" --exclude "index-lista.html" --exclude "terraform/*" --exclude ".gitignore*" --exclude "images/*"
+          aws s3 sync . s3://$BUCKET_NAME/ --delete --exclude ".git/*" --exclude ".github/*" --exclude "index.html" --exclude "terraform/*" --exclude ".gitignore*" --exclude "images/*"
           echo "✅ Copy successful!" >> $GITHUB_STEP_SUMMARY
           S3_WEBSITE_URL="http://${BUCKET_NAME}.s3-website-sa-east-1.amazonaws.com"
           echo "🌐 S3 Website URL: $S3_WEBSITE_URL" >> $GITHUB_STEP_SUMMARY
