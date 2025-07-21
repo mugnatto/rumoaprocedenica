@@ -69,7 +69,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Post deployment summary
-        run: echo "🚀 Deploy concluído! Acesse a página em: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+        run: echo "🚀 Deploy concluído! Acesse a página em: ${{ steps.set-output.outputs.artifact-path }}" >> $GITHUB_STEP_SUMMARY
 
   approval:
     needs: build-and-deploy
