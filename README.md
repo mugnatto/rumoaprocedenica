@@ -114,5 +114,4 @@ This project provides a professional infrastructure for hosting static websites 
 | **Full Offer** | Deploy Landing Page | `index.html` | Multiple pricing/offer fields |
 
 **Example URLs:**
-- Waiting List: `https://rumoaprocedenica.com/index-lista.html`
-- Main Offer: `https://rumoaprocedenica.com/`
+- Main Offer: `https://URL.com/`
