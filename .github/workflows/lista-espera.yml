@@ -28,7 +28,7 @@ jobs:
 
       - name: Replace placeholders with manual inputs
         run: |
-          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index-lista.html
+          sed -i 's|{{ CHAT_URL }}|${{ github.event.inputs.CHAT_URL }}|g' index-lista.html
           sed -i 's|{{ STATUS_LISTA }}|${{ github.event.inputs.STATUS_LISTA }}|g' index-lista.html
           # Copy lista de espera as main page
           cp index-lista.html index.html
@@ -74,7 +74,7 @@ jobs:
 
       - name: Replace placeholders with manual inputs
         run: |
-          sed -i 's|{{ PAYMENT_URL }}|${{ github.event.inputs.PAYMENT_URL }}|g' index-lista.html
+          sed -i 's|{{ CHAT_URL }}|${{ github.event.inputs.CHAT_URL }}|g' index-lista.html
           sed -i 's|{{ STATUS_LISTA }}|${{ github.event.inputs.STATUS_LISTA }}|g' index-lista.html
           # Copy lista de espera as main page
           cp index-lista.html index.html
