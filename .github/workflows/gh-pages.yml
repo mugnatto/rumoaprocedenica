@@ -6,7 +6,7 @@ on:
       PAYMENT_URL:
         description: 'URL de pagamento (Hotmart, etc.)'
         required: true
-        default: 'https://docs.google.com/forms/d/e/1FAIpQLSctClV5fHLDJ_YODtDkvq09qpLpW3jtWWHlzvQOEHe0cMDazQ/viewform'
+        default: 'https://pay.hotmart.com/K96466105H?off=yhht9gke{{+PAYMENT_URL+}}bid=1767559144611&bid=1769483347614'
       VALOR_ORIGINAL:
         description: 'Valor original riscado (ex: R$ 5.000,00)'
         required: true
